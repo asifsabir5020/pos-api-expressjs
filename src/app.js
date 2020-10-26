@@ -1,6 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import swaggerDocument from './documentation/swagger.json';
 import { connect } from './config/db';
 import { restRouter } from './api';
@@ -15,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
+
+app.use(cors({origin: 'http://localhost:3000'}));
 
 app.use('/api', restRouter);
 app.use(
