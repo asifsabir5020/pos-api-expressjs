@@ -8,7 +8,7 @@ export default {
     try {
       const { requestParams, validationErrors } = validateRequestBody(req.body);
       if (validationErrors) {
-        return res.status(421).send(validationErrors);
+         return res.status(421).send(validationErrors);
       }
       const newRecord = await ProductCategory.create(requestParams);
       return res.send(newRecord);

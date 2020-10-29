@@ -6,7 +6,7 @@ export const ProductCategory = model('ProductCategory', new Schema({
   title: {
     type: String,
     required: [true, 'ProductCategory must have title'],
-    unique: true
+    unique: [true, "title must be unique"]
   },
 }));
 

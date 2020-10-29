@@ -8,7 +8,12 @@ const config = {
       secret: 'I_AME_GERER',
       MONGO_URI: 'mongodb://localhost/pos-db',
       port: 27017,
-    },
+    }
 };
 
 export const getConfig = env => config[env] || config.development;
+
+export const jwtSettings =  {
+  secret: 'iuyifdretihk[pldfdrzr',
+  expire: '1h',
+}
