@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
 
 const { Schema, model } = mongoose;
 export const User = model('User', new Schema({
@@ -22,7 +21,7 @@ export const User = model('User', new Schema({
   resetPasswordExpire: Date,
   role: {
       type: String,
-      enum: ['user', 'publishetr'],
+      enum: ['user', 'publisher'],
       default: 'user',
   },
   createdAt: {

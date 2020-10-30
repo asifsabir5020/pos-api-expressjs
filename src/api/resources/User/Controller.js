@@ -41,9 +41,12 @@ export default {
         return res.status(401).send({ error: `invalid credentials` });
       }
       const token = generateToken({email:user.email});
+      console.log(user);
       const userPayload = {
-        name: user.name,
-        email: user.email,
+        user: {
+          name: user.name,
+          email: user.email,
+        },
         token
       };
       return res.send(userPayload);
