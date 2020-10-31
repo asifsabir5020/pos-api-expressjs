@@ -14,7 +14,6 @@ export default {
       const salt = await bcrypt.genSalt(10);
       requestParams.password = await bcrypt.hash(requestParams.password, salt);
       const newRecord = await User.create(requestParams);
-      console.log('newRecord', newRecord);
       const token = generateToken({email:newRecord.email});
       const user = {
         name: newRecord.name,
@@ -41,7 +40,6 @@ export default {
         return res.status(401).send({ error: `invalid credentials` });
       }
       const token = generateToken({email:user.email});
-      console.log(user);
       const userPayload = {
         user: {
           name: user.name,
