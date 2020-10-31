@@ -21,7 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="2bb275a0-8b24-4993-be38-7191e9c22138" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/resources/ProductCategory/Router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/resources/ProductCategory/Router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/resources/User/Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/resources/User/Controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/resources/User/Model.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/resources/User/Model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/resources/User/Router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/resources/User/Router.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603964312593</updated>
       <workItem from="1603964314693" duration="3278000" />
+      <workItem from="1604111069522" duration="1569000" />
     </task>
     <servers />
   </component>
@@ -87,5 +91,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

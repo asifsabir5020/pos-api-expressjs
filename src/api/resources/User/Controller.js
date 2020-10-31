@@ -1,6 +1,10 @@
 import bcrypt from 'bcryptjs';
 import { User } from './Model';
-import { validateRequestBody, validateLoginRequestBody, generateToken } from './utils';
+import { 
+  validateRequestBody, 
+  validateLoginRequestBody,
+  validateUpdateRequestBody, 
+  generateToken } from './utils';
 
 const entityName = 'User';
 
@@ -14,13 +18,7 @@ export default {
       const salt = await bcrypt.genSalt(10);
       requestParams.password = await bcrypt.hash(requestParams.password, salt);
       const newRecord = await User.create(requestParams);
-      const token = generateToken({email:newRecord.email});
-      const user = {
-        name: newRecord.name,
-        email: newRecord.email,
-        token
-      };
-      return res.send(user);
+      return res.send(newRecord);
     } catch (error) {
       return res.status(500).send(error);
     }
@@ -44,6 +42,7 @@ export default {
         user: {
           name: user.name,
           email: user.email,
+          role: user.role,
         },
         token
       };
@@ -51,5 +50,28 @@ export default {
     } catch (error) {
       return res.status(500).send(error);
     }
-  }
+  },
+  async index(req, res) {
+    try {
+      const records = await User.find();
+      return res.send(records);
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  },
+  async update(req, res) {
+    try {
+      const { requestParams, validationErrors } = validateUpdateRequestBody(req.body);
+      if (validationErrors) {
+        return res.status(421).send(validationErrors);
+      }
+      const updatedRecord = await User.findOneAndUpdate({ _id: req.params.id }, requestParams, { new: true });
+      if (!updatedRecord) {
+        return res.status(404).send({ error: `could not find ${entityName}` });
+      }
+      return res.send(updatedRecord);
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  },
 };

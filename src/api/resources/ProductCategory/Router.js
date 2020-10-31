@@ -1,7 +1,7 @@
 import express from 'express';
 import ProductCategoryController from './Controller';
 import { authenticate } from '../../../common/middlewares/authenticate';
-import { authorize } from './../../../common/middlewares/authorize';
+import { authorize } from '../../../common/middlewares/authorize';
 
 const router = express.Router();
 
