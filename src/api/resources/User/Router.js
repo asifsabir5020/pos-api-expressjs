@@ -21,4 +21,9 @@ router
   .route('/register/:id')
   .put(authenticate, authorize('admin'), UserController.update);
 
+router
+  .route('/toggle_user_status/:id')
+  .put(authenticate, authorize('admin'), UserController.toggleUserStatus);
+
 export default router;
+

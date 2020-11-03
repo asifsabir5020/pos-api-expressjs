@@ -41,6 +41,17 @@ export const validateUpdateRequestBody = requestBody => {
   return { requestParams: value };
 }
 
+export const validateUserToggleRequestBody = requestBody => {
+  const schema = Joi.object({
+      status: Joi.boolean().required(),
+  });
+  const { value, error } = schema.validate(requestBody);
+  if (error && error.details) {
+    return { validationErrors: error.details };
+  }
+  return { requestParams: value };
+}
+
 export const generateToken = (payload) => {
   return jwt.sign(payload, jwtSettings.secret, {expiresIn: jwtSettings.expire});
 }

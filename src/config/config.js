@@ -15,5 +15,5 @@ export const getConfig = env => config[env] || config.development;
 
 export const jwtSettings =  {
   secret: 'iuyifdretihk[pldfdrzr',
-  expire: '1h',
+  expire: '3h',
 }

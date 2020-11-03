@@ -23,6 +23,10 @@ export const User = model('User', new Schema({
       type: String,
       enum: ['admin', 'sales-man'],
   },
+  status: {
+    type: Boolean,
+    default: true,
+  },
   createdAt: {
       type: Date,
       default: Date.now

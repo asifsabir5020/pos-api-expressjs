@@ -6,9 +6,13 @@
       "url": "https://opensource.org/licenses/MIT"
     },
     "version": "1.0.0",
-    "host": "localhost:3006",
-    "basePath": "/api",
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
     "tags": [
+      {
+        "name": "Users",
+        "description": "API for User Authentication"
+      },
       {
         "name": "ProductCategories",
         "description": "API for Product Categories Endpoints"
@@ -22,6 +26,33 @@
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths" :{
+      "/auth/login":{
+        "post":{
+          "tags": ["Users"],
+          "summary": "API Endpoint for user login",
+          "description" : "Create a user session",
+          "parameters":[
+            {
+              "name": "user",
+              "description": "login params",
+              "in": "body",
+              "required": "true",
+              "schema" : {
+                "$ref" : "#definitions/LoginUser"
+              }
+            }
+          ],
+          "produces" : ["application/json"],
+          "responses":{
+            "200":{
+              "description" : "New Product Category Created",
+              "schema": {
+               "$ref" : "#definitions/LoginResponse"
+              }
+            }
+          }
+        }
+      },
       "/product_categories":{
        "post":{
          "tags": ["ProductCategories"],
@@ -36,7 +67,14 @@
              "schema" : {
                "$ref" : "#definitions/CreateUpdateProductCategories"
              }
-           }
+           },
+          {
+            "name": "authorization",
+            "description": "Access token to authorize the user",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
          ],
          "produces" : ["application/json"],
          "responses":{
@@ -52,7 +90,22 @@
         "tags": ["ProductCategories"],
         "summary": "API Endpoint to find all Product Categories",
         "description" : "Find all Product Categories from the database",
-        "parameters":[],
+        "parameters":[
+          {
+            "name": "authorization",
+            "description": "Access token to authorize the user",
+            "in": "header",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "authorization",
+            "description": "Access token to authorize the user",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
         "produces" : ["application/json"],
         "responses":{
           "200":{
@@ -72,8 +125,14 @@
               "required": "true",
               "description": "id of the Product Category",
               "type": "string"
-
-           }
+           },
+           {
+            "name": "authorization",
+            "description": "Access token to authorize the user",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
         ],
         "get":{
           "tags": ["ProductCategories"],
@@ -116,6 +175,13 @@
               "schema" : {
                 "$ref" : "#definitions/CreateUpdateProductCategories"
               }
+            },
+            {
+              "name": "authorization",
+              "description": "Access token to authorize the user",
+              "in": "header",
+              "type": "string",
+              "required": true
             }
           ],
           "produces" : ["application/json"],
@@ -146,6 +212,13 @@
               "schema" : {
                 "$ref" : "#definitions/CreateUpdateProducts"
               }
+            },
+            {
+              "name": "authorization",
+              "description": "Access token to authorize the user",
+              "in": "header",
+              "type": "string",
+              "required": true
             }
           ],
           "produces" : ["application/json"],
@@ -162,7 +235,15 @@
          "tags": ["Products"],
          "summary": "API Endpoint to find all Products",
          "description" : "Find all Products from the database",
-         "parameters":[],
+         "parameters":[
+          {
+            "name": "authorization",
+            "description": "Access token to authorize the user",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+         ],
          "produces" : ["application/json"],
          "responses":{
            "200":{
@@ -183,6 +264,13 @@
                "description": "id of the Product",
                "type": "string"
  
+            },
+            {
+              "name": "authorization",
+              "description": "Access token to authorize the user",
+              "in": "header",
+              "type": "string",
+              "required": true
             }
          ],
          "get":{
@@ -244,6 +332,39 @@
 
     "definitions":{
 
+      "LoginUser":{
+        "required": ["email", "password"],
+        "properties":{
+          "email": {
+            "type" : "string"
+          },
+          "password": {
+            "type" : "string"
+          }
+        }
+      },
+
+      "LoginResponse":{
+        "properties":{
+          "token": {
+            "type" : "string"
+          },
+          "user": {
+            "type" : "object",
+            "properties":{
+              "name": {
+                "type" : "string"
+              },
+              "email": {
+                "type" : "string"
+              },
+              "role": {
+                "type" : "string"
+              }
+          }
+          }
+        }
+      },
 
       "ProductCategories":{
         "properties":{

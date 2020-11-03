@@ -1,4 +1,6 @@
 import express from 'express';
+import http from 'http';
+import socketIo from 'socket.io';
 import logger from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
@@ -18,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
 
-app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({origin: 'http://192.168.0.104:3000'}));
 
 app.use('/api/v1', restRouter);
 
@@ -44,6 +46,24 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running at PORT http://localhost:${PORT}`);
-});
+const server = http.createServer(app);
+
+
+export const skt = socketIo(server);
+
+export const clientList = [];
+
+  skt.on("connect", (socket) => {
+    console.log('connected +++++++++++++++++++++++++++++++++', socket.id);
+    clientList.push({
+      email: socket.handshake.query.userEmail,
+      socketId: socket.id
+    });
+    socket.on('disconnect', function (data) {
+      // delete clientList.find(item => item.socketId === socket.id);
+      console.log('disconnect -------------------------------', socket.id);
+    });
+  }); 
+
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
