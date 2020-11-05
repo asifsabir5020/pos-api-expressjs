@@ -1,28 +1,24 @@
-import { Product } from './Model';
-import { Stock } from './../Stock/Model';
+import { Vendor } from './Model';
 import { validateRequestBody } from './utils';
 
-const entityName = 'Product';
+const entityName = 'Vendor';
 
 export default {
   async create(req, res) {
     try {
       const { requestParams, validationErrors } = validateRequestBody(req.body);
       if (validationErrors) {
-        return res.status(421).send(validationErrors);
+         return res.status(421).send(validationErrors);
       }
-      const newRecord = await Product.create(requestParams);
-      const newStock = await Stock.create({product: newRecord._id, quantity: 0 });
-      //: needs to be removed
-      const record = await Product.findById(newRecord._id).populate('category', 'title');
-      return res.send(record);
+      const newRecord = await Vendor.create(requestParams);
+      return res.send(newRecord);
     } catch (error) {
       return res.status(500).send(error);
     }
   },
   async index(req, res) {
     try {
-      const records = await Product.find().populate('category', 'title');
+      const records = await Vendor.find()
       return res.send(records);
     } catch (error) {
       return res.status(500).send(error);
@@ -30,7 +26,7 @@ export default {
   },
   async show(req, res) {
     try {
-      const record = await Product.findById(req.params.id).populate('category', 'title');
+      const record = await Vendor.findById(req.params.id);
       if (!record) {
         return res.status(404).send({ error: `could not find ${entityName}` });
       }
@@ -41,7 +37,7 @@ export default {
   },
   async delete(req, res) {
     try {
-      const record = await Product.findOneAndRemove({ _id: req.params.id });
+      const record = await Vendor.findOneAndRemove({ _id: req.params.id });
       if (!record) {
         return res.status(404).send({ error: `could not find ${entityName}` });
       }
@@ -56,7 +52,7 @@ export default {
       if (validationErrors) {
         return res.status(421).send(validationErrors);
       }
-      const updatedRecord = await Product.findOneAndUpdate({ _id: req.params.id }, requestParams, { new: true });
+      const updatedRecord = await Vendor.findOneAndUpdate({ _id: req.params.id }, requestParams, { new: true });
       if (!updatedRecord) {
         return res.status(404).send({ error: `could not find ${entityName}` });
       }

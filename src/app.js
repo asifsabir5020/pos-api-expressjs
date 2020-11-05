@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
 
-app.use(cors({origin: 'http://192.168.0.104:3000'}));
+app.use(cors({ origin: "*"}));
 
 app.use('/api/v1', restRouter);
 
@@ -54,16 +54,19 @@ export const skt = socketIo(server);
 export const clientList = [];
 
   skt.on("connect", (socket) => {
-    console.log('connected +++++++++++++++++++++++++++++++++', socket.id);
+    console.log('connected +++++++++++++++++++++++++++++++++');
     clientList.push({
       email: socket.handshake.query.userEmail,
       socketId: socket.id
     });
     socket.on('disconnect', function (data) {
-      // delete clientList.find(item => item.socketId === socket.id);
-      console.log('disconnect -------------------------------', socket.id);
+      clientList.splice(
+        clientList.findIndex(item => (item.id === socket.id || socket.id === null)),
+        1,
+      );
+      console.log('disconnect -------------------------------');
     });
   }); 
 
-server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+  server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 

@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { User } from './Model';
+import { Permission } from './../Permission/Model';
 import { 
   validateRequestBody, 
   validateLoginRequestBody,
@@ -21,6 +22,9 @@ export default {
       const salt = await bcrypt.genSalt(10);
       requestParams.password = await bcrypt.hash(requestParams.password, salt);
       const newRecord = await User.create(requestParams);
+      if(newRecord){
+        await Permission.create({user:newRecord._id});
+      }
       return res.send(newRecord);
     } catch (error) {
       return res.status(500).send(error);
@@ -35,7 +39,7 @@ export default {
       const user = await User.findOne({ email: requestParams.email }).select('+password');
       if(user){
         if(!user.status){
-          return res.status(401).send({ error: `user activation is disabled` });
+            return res.status(401).send({ error: `unauthenticated user / disabled user` });
         }
       }else{
         return res.status(401).send({ error: `invalid credentials` });
@@ -60,7 +64,7 @@ export default {
   },
   async index(req, res) {
     try {
-      const records = await User.find();
+      const records = await User.find().populate('category', 'title');
       return res.send(records);
     } catch (error) {
       return res.status(500).send(error);
@@ -84,6 +88,7 @@ export default {
   async toggleUserStatus(req, res) {
     try {
       const { requestParams, validationErrors } = validateUserToggleRequestBody(req.body);
+      console.log('clientList', clientList);
       if (validationErrors) {
         return res.status(421).send(validationErrors);
       }
