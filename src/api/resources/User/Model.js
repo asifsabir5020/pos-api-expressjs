@@ -21,7 +21,7 @@ export const User = model('User', new Schema({
   resetPasswordExpire: Date,
   role: {
       type: String,
-      enum: ['admin', 'sales-man'],
+      enum: ['admin', 'sales-man', 'manager'],
   },
   status: {
     type: Boolean,

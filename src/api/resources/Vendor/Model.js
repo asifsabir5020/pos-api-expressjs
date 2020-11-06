@@ -11,5 +11,9 @@ export const Vendor = model('Vendor', new Schema({
     type: String,
     required: [true, 'Vendor must have contact'],
   },
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 }));
 

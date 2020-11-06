@@ -14,7 +14,7 @@ export default {
       const newRecord = await Purchase.create(requestParams);
       const updatedStock = await Stock.update(
                                       { product: requestParams.product },
-                                      {$inc: {quantity: 10 }});
+                                      {$inc: {quantity: requestParams.quantity }});
       //: needs to be removed
       const record = await Purchase.findById(newRecord._id)
                                   .populate('product', 'title')

@@ -10,5 +10,9 @@ export const Customer = model('Customer', new Schema({
     type: String,
     required: [true, 'Customer must have contact'],
   },
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
 }));
 

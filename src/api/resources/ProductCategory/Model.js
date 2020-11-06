@@ -8,6 +8,10 @@ export const ProductCategory = model('ProductCategory', new Schema({
     required: [true, 'ProductCategory must have title'],
     unique: [true, "title must be unique"]
   },
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
 }));
 
 export const validate = record => {

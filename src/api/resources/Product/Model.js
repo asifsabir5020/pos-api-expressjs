@@ -11,6 +11,10 @@ export const Product = model('Product', new Schema({
   category:{
     type: Schema.Types.ObjectId,
     ref: 'ProductCategory'
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
   }
 }));
 
